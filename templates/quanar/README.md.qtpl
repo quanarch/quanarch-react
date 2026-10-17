@@ -1,0 +1,22 @@
+# [[ .Name ]]
+
+A [Quanarch](https://quanarch.org) quanar: it gives quans a place to live and
+plugs in the quas they use. It holds no business logic.
+
+```sh
+npm run dev       # start the quanar
+npm run build     # build for production
+```
+
+| Path | Purpose |
+| --- | --- |
+| `src/plugs.ts` | The quas this quanar plugs in, and how each one works. |
+| `src/loader/` | Where quans come from. `static.ts` reads `public/quans/`; swap it for any source. |
+| `src/policy.ts` | Which quans a user receives. |
+| `src/main.tsx` | Shares React with the quans it loads. |
+
+Deliver a quan into this quanar from the quan's directory:
+
+```sh
+npm run build && npm run deliver -- ../[[ .Name ]]
+```

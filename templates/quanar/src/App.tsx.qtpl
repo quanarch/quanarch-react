@@ -1,0 +1,79 @@
+import { useEffect, useState } from 'react';
+import { QuanHost, quaKey, type QuanModule } from '@quanarch/react';
+import { loader } from './loader';
+import { plugs } from './plugs';
+import { selectQuans } from './policy';
+
+type Loaded = { name: string; quan?: QuanModule; error?: string };
+
+export function App() {
+  const [quans, setQuans] = useState<Loaded[]>();
+  const [active, setActive] = useState<string>();
+  const [error, setError] = useState<string>();
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const names = selectQuans(await loader.list());
+        const results = await Promise.allSettled(names.map((name) => loader.load(name)));
+        const loaded = results.map((r, i): Loaded =>
+          r.status === 'fulfilled' ? { name: names[i], quan: r.value } : { name: names[i], error: String(r.reason) },
+        );
+        if (!cancelled) {
+          setQuans(loaded);
+          setActive(loaded[0]?.name);
+        }
+      } catch (e) {
+        if (!cancelled) setError(String(e));
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const current = quans?.find((q) => q.name === active);
+
+  return (
+    <div className="quanar">
+      <header className="quanar__bar">
+        <strong>[[ title .Name ]]</strong>
+        <nav>
+          {quans?.map((q) => (
+            <button key={q.name} className={q.name === active ? 'is-active' : ''} onClick={() => setActive(q.name)}>
+              {q.name}
+            </button>
+          ))}
+        </nav>
+      </header>
+
+      <main className="quanar__main">
+        {error && <p className="quanar__error">{error}</p>}
+        {!error && !quans && <p className="quanar__muted">Loading quans…</p>}
+        {quans?.length === 0 && (
+          <div className="quanar__empty">
+            <p>No quans yet.</p>
+            <p>
+              Create one with <code>qu new quan billing --stack react-ts</code>, then run{' '}
+              <code>npm run build && npm run deliver -- ../[[ .Name ]]</code> inside it.
+            </p>
+          </div>
+        )}
+        {current?.error && <p className="quanar__error">{current.error}</p>}
+        {current?.quan && (
+          <QuanHost
+            key={current.name}
+            quan={current.quan}
+            plugs={plugs}
+            fallback={(missing) => (
+              <p className="quanar__error">
+                {current.name} needs {missing.map(quaKey).join(', ')}, which this quanar does not plug in.
+              </p>
+            )}
+          />
+        )}
+      </main>
+    </div>
+  );
+}

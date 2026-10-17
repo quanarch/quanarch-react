@@ -1,0 +1,14 @@
+stack react-ts
+version 0.1.0
+title "React + TypeScript"
+
+template qua templates/qua {
+	run npm install
+	run npm run build
+}
+template quanar templates/quanar {
+	run npm install
+}
+template quan templates/quan {
+	run npm install
+}

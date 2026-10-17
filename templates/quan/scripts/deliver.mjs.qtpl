@@ -1,0 +1,40 @@
+// Delivers the built quan to a quanar that loads quans from public/quans,
+// like the static loader of a react-ts quanar.
+//
+//   npm run build && npm run deliver -- ../main
+
+import { cp, mkdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+
+const name = '[[ .Name ]]';
+const quanar = process.argv[2];
+if (!quanar) {
+  console.error('usage: npm run deliver -- <quanar directory>');
+  process.exit(1);
+}
+
+try {
+  await stat('dist/index.js');
+} catch {
+  console.error('dist/index.js not found; run npm run build first.');
+  process.exit(1);
+}
+
+const quans = path.resolve(quanar, 'public', 'quans');
+const target = path.join(quans, name);
+await rm(target, { recursive: true, force: true });
+await mkdir(target, { recursive: true });
+await cp('dist', target, { recursive: true });
+
+const indexFile = path.join(quans, 'index.json');
+let list = [];
+try {
+  list = JSON.parse(await readFile(indexFile, 'utf8'));
+} catch {
+  // No index yet.
+}
+if (!list.includes(name)) list.push(name);
+list.sort();
+await writeFile(indexFile, JSON.stringify(list, null, 2) + '\n');
+
+console.log(`Delivered ${name} to ${target}`);

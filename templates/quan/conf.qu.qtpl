@@ -1,0 +1,5 @@
+quan [[ .Name ]]
+stack [[ .Stack ]]@[[ .StackVersion ]]
+[[ range .Quas ]]
+qua [[ .Name ]][[ if .Version ]]@[[ .Version ]][[ end ]]
+[[- end ]]

@@ -1,0 +1,13 @@
+import { defineQuan } from '@quanarch/react';
+[[ range .Quas ]]import { [[ camel .Name ]] } from '[[ .Name ]]';
+[[ end ]]import { [[ pascal .Name ]] } from './[[ pascal .Name ]]';
+
+export default defineQuan({
+  name: '[[ .Name ]]',
+  quas: [
+[[- range .Quas ]]
+    [[ camel .Name ]],
+[[- end ]]
+  ],
+  component: [[ pascal .Name ]],
+});
