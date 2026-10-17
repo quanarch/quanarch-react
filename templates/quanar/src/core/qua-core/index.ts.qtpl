@@ -1,0 +1,15 @@
+[[ range .Quas ]]import { init, isInitialized, reset, type QuanarCore } from '[[ .Name ]]';
+[[ end ]]
+/**
+ * The quanar's side of the qua: the real implementation behind every call a
+ * quan makes.
+ */
+const core: QuanarCore = {
+  increment: (value) => value + 1,
+};
+
+/** Plugs the core into the qua. Called once, before any quan is loaded. */
+export function initQua(): void {
+  if (isInitialized()) reset();
+  init(core);
+}

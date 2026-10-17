@@ -1,0 +1,26 @@
+# [[ title .Name ]]
+
+A [Quanarch](https://quanarch.org) project.
+
+```
+[[ .Name ]]/
+├── packages/
+│   └── [[ (index .Quas 0).Name ]]/      qua: the contract between the quanar and its quans
+├── quanar/                 quanar: loads the quans and plugs in the qua
+└── quans/
+    └── [[ (index .Quans 0).Name ]]/      quan: business logic, loaded by the quanar
+```
+
+## Run
+
+In two terminals:
+
+```sh
+cd quans/[[ (index .Quans 0).Name ]] && npm run watch     # builds the quan and serves it on port [[ (index .Quans 0).Port ]]
+cd quanar && npm run dev               # starts the quanar on port 5173
+```
+
+Open http://localhost:5173/[[ (index .Quans 0).Name ]]
+
+The counter on the page belongs to the quan, but the quan never adds to it
+itself: it calls `increment` on the qua, and the quanar does the counting.

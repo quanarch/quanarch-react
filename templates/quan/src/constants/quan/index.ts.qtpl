@@ -1,2 +1,0 @@
-export const QUAN_NAME = '[[ .Name ]]';
-export const QUAN_TITLE = '[[ title .Name ]]';

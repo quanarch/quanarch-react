@@ -1,4 +1,0 @@
-import { defineQua } from '@quanarch/react';
-import type { [[ pascal .Name ]] } from '../api';
-
-export const [[ camel .Name ]] = defineQua<[[ pascal .Name ]]>('[[ .Name ]]', '1');

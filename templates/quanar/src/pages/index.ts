@@ -1,1 +1,1 @@
-export * from './quans-page';
+export * from './local-page';

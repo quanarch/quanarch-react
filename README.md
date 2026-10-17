@@ -8,55 +8,45 @@
   The React + TypeScript stack for <a href="https://quanarch.org">Quanarch</a>.
 </p>
 
-This repository holds two things:
-
-- **The `react-ts` stack**: templates for a qua, a quanar and a quan, used by
-  [`qu`](https://github.com/quanarch/quanarch).
-- **[`@quanarch/react`](packages/react)**: the contract a quanar and its quans share.
+This repository is the `react-ts` stack: the templates `qu` uses to create a
+project, a quanar, a quan or a qua in React and TypeScript.
 
 ## Quick start
 
 ```sh
-qu new qua qua-a --stack react-ts
-qu new quanar main --stack react-ts --qua ./qua-a
-qu new quan billing --stack react-ts --qua ./qua-a
-
-cd billing
-npm run dev                         # work on the quan in its development quanar
-npm run build
-npm run deliver -- ../main          # hand the build to the quanar
-
-cd ../main
-npm run dev                         # the quanar loads billing and plugs in qua-a
+qu          # choose project, React · TypeScript, then name the parts
 ```
 
-## What goes where
+A project is created with its three parts already wired:
 
-Quanarch prescribes the contract, never the mechanism.
+```
+acme/
+├── packages/acme-qua/   qua: QuanarCore interface, init(), increment()
+├── quanar/              quanar: shares React and the qua on window, plugs its core in, loads quans
+└── quans/billing/       quan: manifest (name, version, routes, permissions) and a counter page
+```
 
-| | Lives in | Why |
-| --- | --- | --- |
-| How a qua, a quan and a loader look | `@quanarch/react` | A quanar and its quans are built apart and must agree. |
-| Where quans are loaded from | the quanar's `src/core/loader` | Only the quanar decides. Swap the static loader for a URL, an API, a database or object storage. |
-| Which quans a user receives | the quanar's `src/core/policy` and your servers | A decision for each system. |
-| How each qua works | the quanar's `src/core/plugs` | The quanar implements, quans only call. |
-
-Generated projects share one layout: `app`, `pages`, `layouts`, `components`,
-`hooks`, `core`, `services`, `configs`, `constants`, `types`, `utils` and `assets`,
-each exported through an `index.ts` barrel. Delete what you do not need.
-
-`@quanarch/react` is published to `https://repo.relteco.com/repository/npm-relteco/`;
-each generated project carries an `.npmrc` that points the `@quanarch` scope there.
-
-A built quan is a single ES module. It does not bundle React: it uses the
-quanar's copy, shared through `shareModules`.
-
-## Development
+Run it in two terminals:
 
 ```sh
-cd packages/react && npm install && npm test
-QU=/path/to/qu scripts/e2e.sh       # generate, build and run all three templates
+cd acme/quans/billing && npm run watch    # builds the quan and serves it on port 4001
+cd acme/quanar && npm run dev             # http://localhost:5173
 ```
+
+The counter belongs to the quan, but the quan never counts: it calls
+`increment` on the qua and the quanar's core answers.
+
+## Templates
+
+| Template | What it holds |
+| --- | --- |
+| `templates/project` | The project root: `conf.qu`, a README and `packages/README.md`. |
+| `templates/qua` | The contract: `QuanarCore`, `QuanManifest`, `init()` and one call, `increment()`. |
+| `templates/quanar` | The host: header and sidebar, a local page, the quan loader and the qua's core. |
+| `templates/quan` | A quan: its manifest and empty folders for api, components, config, constants, hooks, langs, pages, services, store, types and utils. |
+
+CI creates a project from these templates with the engine's generator and
+builds every part.
 
 ## License
 

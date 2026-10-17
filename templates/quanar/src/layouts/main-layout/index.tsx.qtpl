@@ -1,0 +1,50 @@
+import React from 'react';
+import { NavLink, Outlet } from 'react-router-dom';
+[[ range .Quas ]]import type { QuanManifest } from '[[ .Name ]]';
+[[ end ]]import './index.css';
+
+interface MainLayoutProps {
+  manifests: QuanManifest[];
+  loading: boolean;
+  errors: string[];
+}
+
+const linkClass = ({ isActive }: { isActive: boolean }) => (isActive ? 'main-layout__link is-active' : 'main-layout__link');
+
+/** The quanar's frame: header and sidebar stay, pages and quans render in the content area. */
+export const MainLayout: React.FC<MainLayoutProps> = ({ manifests, loading, errors }) => {
+  return (
+    <div className="main-layout">
+      <header className="main-layout__header">
+        <strong>[[ title .Name ]]</strong>
+        <span className="main-layout__badge">quanar</span>
+      </header>
+
+      <aside className="main-layout__sidebar">
+        <nav>
+          <NavLink to="/" end className={linkClass}>
+            Home
+          </NavLink>
+
+          <div className="main-layout__group">Quans</div>
+          {loading && <span className="main-layout__muted">Loading…</span>}
+          {manifests.map((manifest) => (
+            <NavLink key={manifest.name} to={manifest.routes[0]?.path ?? '/'} className={linkClass}>
+              {manifest.displayName ?? manifest.name}
+            </NavLink>
+          ))}
+          {!loading && manifests.length === 0 && <span className="main-layout__muted">None loaded</span>}
+          {errors.map((error) => (
+            <span key={error} className="main-layout__error">
+              {error}
+            </span>
+          ))}
+        </nav>
+      </aside>
+
+      <main className="main-layout__content">
+        <Outlet />
+      </main>
+    </div>
+  );
+};

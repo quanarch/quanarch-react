@@ -1,0 +1,8 @@
+import type { QuanConfig } from '../types';
+
+/** The quans this quanar loads, and where each one is served from. */
+export const QUANS: QuanConfig[] = [
+[[- range .Quans ]]
+  { name: '[[ .Name ]]', url: 'http://localhost:[[ .Port ]]/[[ .Name ]].js' },
+[[- end ]]
+];
