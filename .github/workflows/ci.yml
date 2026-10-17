@@ -16,9 +16,17 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 24
+      - uses: actions/checkout@v7
+        with:
+          repository: quanarch/quanarch
+          ref: dev
+          path: .qu
       - uses: actions/setup-go@v7
         with:
-          go-version: stable
-      - name: Install qu
-        run: go install github.com/quanarch/quanarch/cmd/qu@dev
+          go-version-file: .qu/go.mod
+          cache-dependency-path: .qu/go.sum
+      - name: Build qu
+        run: go build -C .qu -o "$RUNNER_TEMP/qu" ./cmd/qu
       - run: scripts/e2e.sh
+        env:
+          QU: ${{ runner.temp }}/qu
