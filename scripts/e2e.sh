@@ -48,9 +48,11 @@ if [ -z "$chrome" ]; then
 fi
 
 step "check in a browser"
-(cd main && npx vite preview --port 4173 --strictPort >/dev/null 2>&1) &
+# exec, so $! is Vite itself and the trap can stop it.
+(cd main && exec ./node_modules/.bin/vite preview --port 4173 --strictPort >/dev/null 2>&1) &
 preview_pid=$!
 for _ in $(seq 1 60); do curl -sf -o /dev/null http://localhost:4173/ && break; sleep 0.5; done
+kill -0 "$preview_pid" 2>/dev/null || { echo "vite preview did not start (is port 4173 free?)"; exit 1; }
 dom="$("$chrome" --headless=new --disable-gpu --no-sandbox --virtual-time-budget=5000 --dump-dom http://localhost:4173/ 2>/dev/null)"
 if ! grep -q 'Signed in as Ada Lovelace' <<<"$dom"; then
   echo "the quanar did not render the quan:"
