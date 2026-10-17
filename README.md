@@ -45,6 +45,9 @@ Generated projects share one layout: `app`, `pages`, `layouts`, `components`,
 `hooks`, `core`, `services`, `configs`, `constants`, `types`, `utils` and `assets`,
 each exported through an `index.ts` barrel. Delete what you do not need.
 
+`@quanarch/react` is published to `https://repo.relteco.com/repository/npm-relteco/`;
+each generated project carries an `.npmrc` that points the `@quanarch` scope there.
+
 A built quan is a single ES module. It does not bundle React: it uses the
 quanar's copy, shared through `shareModules`.
 
