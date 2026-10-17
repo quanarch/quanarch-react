@@ -1,0 +1,51 @@
+{
+  "name": "@quanarch/react",
+  "version": "0.1.0",
+  "description": "The Quanarch contract for React: quas, quans, hosting and loading",
+  "license": "Apache-2.0",
+  "author": "Can Berk Coşar",
+  "homepage": "https://quanarch.org",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quanarch/quanarch-react.git",
+    "directory": "packages/react"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./vite": {
+      "types": "./dist/vite.d.ts",
+      "default": "./dist/vite.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --test test/*.test.mjs",
+    "prepare": "npm run build"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "vite": "^8.0.0"
+  },
+  "peerDependenciesMeta": {
+    "vite": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.3.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.4"
+  }
+}
