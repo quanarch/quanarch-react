@@ -37,9 +37,13 @@ Quanarch prescribes the contract, never the mechanism.
 | | Lives in | Why |
 | --- | --- | --- |
 | How a qua, a quan and a loader look | `@quanarch/react` | A quanar and its quans are built apart and must agree. |
-| Where quans are loaded from | the quanar's `src/loader/` | Only the quanar decides. Swap the static loader for a URL, an API, a database or object storage. |
-| Which quans a user receives | the quanar's `src/policy.ts` and your servers | A decision for each system. |
-| How each qua works | the quanar's `src/plugs.ts` | The quanar implements, quans only call. |
+| Where quans are loaded from | the quanar's `src/core/loader` | Only the quanar decides. Swap the static loader for a URL, an API, a database or object storage. |
+| Which quans a user receives | the quanar's `src/core/policy` and your servers | A decision for each system. |
+| How each qua works | the quanar's `src/core/plugs` | The quanar implements, quans only call. |
+
+Generated projects share one layout: `app`, `pages`, `layouts`, `components`,
+`hooks`, `core`, `services`, `configs`, `constants`, `types`, `utils` and `assets`,
+each exported through an `index.ts` barrel. Delete what you do not need.
 
 A built quan is a single ES module. It does not bundle React: it uses the
 quanar's copy, shared through `shareModules`.
