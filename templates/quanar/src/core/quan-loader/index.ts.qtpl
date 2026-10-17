@@ -1,0 +1,43 @@
+[[ range .Quas ]]import type { QuanManifest } from '[[ .Name ]]';
+[[ end ]]import type { QuanConfig } from '../../types';
+
+const SCRIPT_TIMEOUT = 15_000;
+
+/** "billing-report" → "BillingReportQuan", the global a built quan assigns its manifest to. */
+export function toGlobalName(name: string): string {
+  return (
+    name
+      .split('-')
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join('') + 'Quan'
+  );
+}
+
+function loadScript(name: string, url: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = `${url}?t=${Date.now()}`;
+    script.dataset.quan = name;
+    const timer = setTimeout(() => reject(new Error(`Timed out loading ${url}`)), SCRIPT_TIMEOUT);
+    script.onload = () => {
+      clearTimeout(timer);
+      resolve();
+    };
+    script.onerror = () => {
+      clearTimeout(timer);
+      reject(new Error(`Could not load ${url}`));
+    };
+    document.head.appendChild(script);
+  });
+}
+
+/** Loads one quan and returns its manifest. */
+export async function loadQuan(config: QuanConfig): Promise<QuanManifest> {
+  await loadScript(config.name, config.url);
+  const manifest = (window as unknown as Record<string, QuanManifest | undefined>)[toGlobalName(config.name)];
+  if (!manifest) {
+    throw new Error(`${config.name}: no manifest found in window.${toGlobalName(config.name)}`);
+  }
+  await manifest.onMount?.();
+  return manifest;
+}

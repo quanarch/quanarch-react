@@ -1,2 +1,2 @@
-// Shared types: export * from './invoice';
+// Types
 export {};

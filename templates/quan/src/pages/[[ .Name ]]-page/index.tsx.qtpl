@@ -1,0 +1,15 @@
+import React, { useState } from 'react';
+[[ range .Quas ]]import { increment } from '[[ .Name ]]';
+[[ end ]]
+export const [[ pascal .Name ]]Page: React.FC = () => {
+  const [count, setCount] = useState(0);
+
+  return (
+    <section>
+      <h1>[[ title .Name ]]</h1>
+      <p data-count>{count}</p>
+      {/* The quan does not count: it asks the quanar through the qua. */}
+      <button onClick={() => setCount(increment(count))}>Increment</button>
+    </section>
+  );
+};

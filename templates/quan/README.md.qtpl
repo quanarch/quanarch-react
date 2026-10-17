@@ -1,22 +1,11 @@
 # [[ .Name ]]
 
-A [Quanarch](https://quanarch.org) quan. It cannot run on its own: it lives in a
-quanar and reaches it only through the quas it declares in `src/index.ts`.
+A quan. It cannot run on its own: a quanar loads it and gives it a place to live.
+Everything it needs from the outside comes through its qua.
+
+- `src/index.ts` is the manifest: name, version, routes and permissions.
+- `src/pages` holds the pages the manifest routes to.
 
 ```sh
-npm run dev                          # run inside the development quanar (dev/)
-npm run build                        # build dist/index.js for a quanar
-npm run deliver -- ../main           # copy the build into a quanar's public/quans
+npm run watch    # builds the quan and serves it on port [[ .Port ]] for the quanar
 ```
-
-Every folder exports its contents through an `index.ts` barrel, and every
-module is a folder named after it with an `index.ts(x)` inside.
-
-| Path | Purpose |
-| --- | --- |
-| `src/index.ts` | Declares the quan for the quanar. |
-| `src/core/quas` | Every qua the quan uses. |
-| `src/app`, `src/pages`, `src/components`, `src/hooks` | The quan itself. |
-| `src/services`, `src/configs`, `src/constants`, `src/types`, `src/utils`, `src/assets` | Supporting code. |
-| `dev/` | The development quanar, with stand-in quas. |
-| `scripts/deliver.mjs` | Delivers the build to a quanar that loads from `public/quans`. |

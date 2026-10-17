@@ -1,0 +1,26 @@
+import { useEffect, useState } from 'react';
+[[ range .Quas ]]import type { QuanManifest } from '[[ .Name ]]';
+[[ end ]]import { QUANS } from '../../config';
+import { loadQuan } from '../../core';
+
+/** Loads every configured quan; one failing does not stop the others. */
+export function useQuans() {
+  const [manifests, setManifests] = useState<QuanManifest[]>([]);
+  const [errors, setErrors] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    Promise.allSettled(QUANS.map(loadQuan)).then((results) => {
+      if (cancelled) return;
+      setManifests(results.flatMap((r) => (r.status === 'fulfilled' ? [r.value] : [])));
+      setErrors(results.flatMap((r) => (r.status === 'rejected' ? [String(r.reason)] : [])));
+      setLoading(false);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return { manifests, errors, loading };
+}

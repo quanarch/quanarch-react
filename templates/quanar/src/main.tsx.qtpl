@@ -1,0 +1,28 @@
+import React from 'react';
+import * as ReactDOM from 'react-dom/client';
+import * as jsxRuntime from 'react/jsx-runtime';
+[[ range .Quas ]]import * as [[ pascal .Name ]] from '[[ .Name ]]';
+[[ end ]]import { initQua } from './core';
+import { App } from './App';
+
+// Quans do not bundle these: they use the quanar's copies from window.
+declare global {
+  interface Window {
+    React: typeof React;
+    ReactDOM: typeof ReactDOM;
+    ReactJSXRuntime: typeof jsxRuntime;
+[[- range .Quas ]]
+    [[ pascal .Name ]]: typeof [[ pascal .Name ]];
+[[- end ]]
+  }
+}
+
+window.React = React;
+window.ReactDOM = ReactDOM;
+window.ReactJSXRuntime = jsxRuntime;
+[[ range .Quas ]]window.[[ pascal .Name ]] = [[ pascal .Name ]];
+[[ end ]]
+// Plug the quanar's core into the qua before any quan is loaded.
+initQua();
+
+ReactDOM.createRoot(document.getElementById('root')!).render(<App />);

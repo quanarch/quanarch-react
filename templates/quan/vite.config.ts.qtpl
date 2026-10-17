@@ -1,0 +1,39 @@
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+// A quan is built into one script. React and the qua are not bundled: the
+// quanar provides them on window.
+export default defineConfig({
+  plugins: [react()],
+  define: {
+    'process.env.NODE_ENV': '"production"',
+  },
+  build: {
+    lib: {
+      entry: 'src/index.ts',
+      name: '[[ pascal .Name ]]Quan',
+      fileName: () => '[[ .Name ]].js',
+      formats: ['iife'],
+    },
+    rollupOptions: {
+      external: ['react', 'react-dom', 'react/jsx-runtime'[[ range .Quas ]], '[[ .Name ]]'[[ end ]]],
+      output: {
+        globals: {
+          react: 'window.React',
+          'react-dom': 'window.ReactDOM',
+          'react/jsx-runtime': 'window.ReactJSXRuntime',
+[[- range .Quas ]]
+          '[[ .Name ]]': 'window.[[ pascal .Name ]]',
+[[- end ]]
+        },
+        footer: 'window.[[ pascal .Name ]]Quan = [[ pascal .Name ]]Quan.default || [[ pascal .Name ]]Quan;',
+      },
+    },
+    outDir: 'dist',
+    emptyOutDir: true,
+  },
+  preview: {
+    port: [[ .Port ]],
+    cors: true,
+  },
+});

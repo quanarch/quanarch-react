@@ -9,10 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-[[ range .Quas ]]    "[[ .Name ]]": "[[ if .Path ]]file:[[ .Path ]][[ else if .Version ]]^[[ .Version ]][[ else ]]*[[ end ]]",
-[[ end ]]    "@quanarch/react": "^0.1.0",
-    "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+[[ range .Quas ]]    "[[ .Name ]]": "file:[[ .Path ]]",
+[[ end ]]    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router-dom": "^7.18.4"
   },
   "devDependencies": {
     "@types/react": "^19.3.0",

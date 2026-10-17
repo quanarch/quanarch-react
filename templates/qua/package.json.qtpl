@@ -1,8 +1,10 @@
 {
   "name": "[[ .Name ]]",
   "version": "1.0.0",
-  "description": "The [[ .Name ]] qua",
+  "description": "The [[ .Name ]] qua: the contract between a quanar and its quans",
   "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -14,14 +16,9 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "prepublishOnly": "npm run build"
-  },
-  "peerDependencies": {
-    "@quanarch/react": "^0.1.0"
+    "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "devDependencies": {
-    "@quanarch/react": "^0.1.0",
-    "@types/react": "^19.3.0",
     "typescript": "^7.0.2"
   }
 }

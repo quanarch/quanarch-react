@@ -1,15 +1,14 @@
 # [[ .Name ]]
 
-A [Quanarch](https://quanarch.org) qua: the contract between quans and a quanar.
+A qua: the contract between a quanar and its quans. It holds no behaviour.
 
-- `src/index.ts` declares the API. Quans call it, the quanar implements it.
-- `npm run build` writes the package to `dist/`.
+- `src/types`: `QuanarCore`, everything the quanar provides, and `QuanManifest`, what a quan exports.
+- `src/state`: `init()`, called once by the quanar to plug its core in.
+- `src/counter`: `increment()`, called by quans; the quanar answers.
 
-Wire it into a quanar or a quan on disk:
+Add a capability by adding it to `QuanarCore`, implementing it in the quanar's
+core and exposing a function for quans next to `increment`.
 
 ```sh
-qu new quanar main --stack react-ts --qua ./[[ .Name ]]
-qu new quan billing --stack react-ts --qua ./[[ .Name ]]
+npm run build    # writes dist/, which the quanar and the quans use
 ```
-
-Once published to a registry, refer to it as `--qua [[ .Name ]]@1`.

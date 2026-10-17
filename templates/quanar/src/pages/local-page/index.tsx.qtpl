@@ -1,0 +1,18 @@
+import React from 'react';
+
+/** A page that belongs to the quanar itself, not to any quan. */
+export const LocalPage: React.FC = () => {
+  return (
+    <section>
+      <h1>Local page</h1>
+      <p>
+        This page lives inside the quanar <strong>[[ .Name ]]</strong>. It is part of the quanar's own code and is not
+        loaded from any quan.
+      </p>
+      <p>
+        The links under <em>Quans</em> in the sidebar open quans. Each quan is built and served on its own; the quanar
+        loads it at runtime and renders it here, in the content area, while the header and the sidebar stay in place.
+      </p>
+    </section>
+  );
+};
