@@ -8,12 +8,17 @@ npm run dev       # start the quanar
 npm run build     # build for production
 ```
 
+Every folder exports its contents through an `index.ts` barrel, and every
+module is a folder named after it with an `index.ts(x)` inside.
+
 | Path | Purpose |
 | --- | --- |
-| `src/plugs.ts` | The quas this quanar plugs in, and how each one works. |
-| `src/loader/` | Where quans come from. `static.ts` reads `public/quans/`; swap it for any source. |
-| `src/policy.ts` | Which quans a user receives. |
-| `src/main.tsx` | Shares React with the quans it loads. |
+| `src/core/plugs` | The quas this quanar plugs in, and how each one works. |
+| `src/core/loader` | Where quans come from. `static-loader` reads `public/quans/`; swap it for any source. |
+| `src/core/policy` | Which quans a user receives. |
+| `src/core/shared` | Shares React with the quans it loads. |
+| `src/pages`, `src/layouts`, `src/components`, `src/hooks` | The quanar's own interface. |
+| `src/services`, `src/configs`, `src/constants`, `src/types`, `src/utils`, `src/assets` | Supporting code. |
 
 Deliver a quan into this quanar from the quan's directory:
 

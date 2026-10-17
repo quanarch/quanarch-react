@@ -1,0 +1,15 @@
+import { plug, type Plug } from '@quanarch/react';
+[[ range .Quas ]]import { [[ camel .Name ]] } from '[[ .Name ]]';
+[[ end ]]
+/**
+ * Stand-in implementations for development. The real ones live in the quanar;
+ * these only need to be good enough to work on this quan.
+ */
+export const plugs: Plug[] = [
+[[- range .Quas ]]
+  plug([[ camel .Name ]], {
+    getUser: async () => ({ id: 'dev', name: 'Development User' }),
+    notify: (message) => console.info('[[ .Name ]].notify:', message),
+  }),
+[[- end ]]
+];
