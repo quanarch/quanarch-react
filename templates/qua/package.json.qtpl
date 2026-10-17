@@ -1,0 +1,27 @@
+{
+  "name": "[[ .Name ]]",
+  "version": "1.0.0",
+  "description": "The [[ .Name ]] qua",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "@quanarch/react": "^0.1.0"
+  },
+  "devDependencies": {
+    "@quanarch/react": "^0.1.0",
+    "@types/react": "^19.3.0",
+    "typescript": "^7.0.2"
+  }
+}

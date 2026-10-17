@@ -33,6 +33,8 @@ export function quan(options: QuanBuildOptions = {}): Plugin {
   return {
     name: 'quanarch:quan',
     apply: 'build',
+    // Shared modules must be claimed before Vite resolves them from node_modules.
+    enforce: 'pre',
 
     config() {
       return {
@@ -72,19 +74,23 @@ export function quan(options: QuanBuildOptions = {}): Plugin {
       return lines.join('\n');
     },
 
-    generateBundle(_, bundle) {
-      const styles: string[] = [];
-      for (const [file, output] of Object.entries(bundle)) {
-        if (output.type === 'asset' && file.endsWith('.css')) {
-          styles.push(String(output.source));
-          delete bundle[file];
+    generateBundle: {
+      // After Vite has emitted the CSS, so it can be moved into the module.
+      order: 'post',
+      handler(_, bundle) {
+        const styles: string[] = [];
+        for (const [file, output] of Object.entries(bundle)) {
+          if (output.type === 'asset' && file.endsWith('.css')) {
+            styles.push(String(output.source));
+            delete bundle[file];
+          }
         }
-      }
-      if (styles.length === 0) return;
-      const entry = Object.values(bundle).find((o) => o.type === 'chunk' && o.isEntry);
-      if (entry?.type !== 'chunk') return;
-      const css = JSON.stringify(styles.join('\n'));
-      entry.code = `(() => { const s = document.createElement("style"); s.textContent = ${css}; document.head.appendChild(s); })();\n${entry.code}`;
+        if (styles.length === 0) return;
+        const entry = Object.values(bundle).find((o) => o.type === 'chunk' && o.isEntry);
+        if (entry?.type !== 'chunk') return;
+        const css = JSON.stringify(styles.join('\n'));
+        entry.code = `(() => { const s = document.createElement("style"); s.textContent = ${css}; document.head.appendChild(s); })();\n${entry.code}`;
+      },
     },
   };
 }

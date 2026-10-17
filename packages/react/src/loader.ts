@@ -16,7 +16,9 @@ export interface QuanLoader {
  * A building block for loaders; it decides nothing about where quans live.
  */
 export async function importQuan(url: string): Promise<QuanModule> {
-  const mod: { default?: unknown } = await import(/* @vite-ignore */ url);
+  // A full URL keeps dev servers such as Vite's from rewriting the request.
+  const href = typeof document === 'undefined' ? url : new URL(url, document.baseURI).href;
+  const mod: { default?: unknown } = await import(/* @vite-ignore */ href);
   if (!isQuanModule(mod.default)) {
     throw new Error(`${url} is not a quan: its default export must come from defineQuan().`);
   }

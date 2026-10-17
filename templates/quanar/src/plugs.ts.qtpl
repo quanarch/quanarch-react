@@ -1,0 +1,21 @@
+import { plug, type Plug } from '@quanarch/react';
+[[ range .Quas ]]import { [[ camel .Name ]] } from '[[ .Name ]]';
+[[ end ]]
+/**
+ * The quas this quanar plugs in, with their implementations.
+ *
+ * Each implementation is type-checked against its qua, so TypeScript points out
+ * anything missing. A quan receives only the quas it declared.
+ */
+export const plugs: Plug[] = [
+[[- range .Quas ]]
+  plug([[ camel .Name ]], {
+    async getUser() {
+      return { id: '1', name: 'Ada Lovelace' };
+    },
+    notify(message) {
+      window.alert(message);
+    },
+  }),
+[[- end ]]
+];

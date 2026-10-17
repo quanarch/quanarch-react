@@ -1,0 +1,15 @@
+# [[ .Name ]]
+
+A [Quanarch](https://quanarch.org) qua: the contract between quans and a quanar.
+
+- `src/index.ts` declares the API. Quans call it, the quanar implements it.
+- `npm run build` writes the package to `dist/`.
+
+Wire it into a quanar or a quan on disk:
+
+```sh
+qu new quanar main --stack react-ts --qua ./[[ .Name ]]
+qu new quan billing --stack react-ts --qua ./[[ .Name ]]
+```
+
+Once published to a registry, refer to it as `--qua [[ .Name ]]@1`.
