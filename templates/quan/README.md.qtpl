@@ -9,9 +9,14 @@ npm run build                        # build dist/index.js for a quanar
 npm run deliver -- ../main           # copy the build into a quanar's public/quans
 ```
 
+Every folder exports its contents through an `index.ts` barrel, and every
+module is a folder named after it with an `index.ts(x)` inside.
+
 | Path | Purpose |
 | --- | --- |
-| `src/index.ts` | Declares the quan and the quas it uses. |
-| `src/` | The quan itself. |
+| `src/index.ts` | Declares the quan for the quanar. |
+| `src/core/quas` | Every qua the quan uses. |
+| `src/app`, `src/pages`, `src/components`, `src/hooks` | The quan itself. |
+| `src/services`, `src/configs`, `src/constants`, `src/types`, `src/utils`, `src/assets` | Supporting code. |
 | `dev/` | The development quanar, with stand-in quas. |
 | `scripts/deliver.mjs` | Delivers the build to a quanar that loads from `public/quans`. |

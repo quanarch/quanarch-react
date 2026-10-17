@@ -1,0 +1,11 @@
+export function EmptyState() {
+  return (
+    <div className="empty-state">
+      <p>No quans yet.</p>
+      <p>
+        Create one with <code>qu new quan billing --stack react-ts</code>, then run{' '}
+        <code>npm run build && npm run deliver -- ../[[ .Name ]]</code> inside it.
+      </p>
+    </div>
+  );
+}
