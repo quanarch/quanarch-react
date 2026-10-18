@@ -1,0 +1,30 @@
+import type { QuanManifest } from '[[ .Name ]]-qua';
+
+/** How a quan reaches the quanar. */
+export type QuanDelivery = 'api' | 'sse' | 'public' | 'artifacts';
+
+/** Where a quan is and how to check it, as the server or the config describes it. */
+export interface QuanSource {
+  name: string;
+  displayName: string;
+  description: string;
+  url: string;
+  version: string;
+  /** SHA-256 of the build; empty when there is nothing to check against. */
+  hash: string;
+  delivery: QuanDelivery;
+  permissions: string[];
+}
+
+export type QuanStatus = 'loading' | 'loaded' | 'error';
+
+/** A quan the quanar is loading or has loaded. */
+export interface QuanEntry {
+  source: QuanSource;
+  status: QuanStatus;
+  /** true when the hash matched, null when there was no hash to check. */
+  verified: boolean | null;
+  manifest?: QuanManifest;
+  error?: string;
+  loadedAt?: string;
+}

@@ -1,0 +1,20 @@
+import type { NoticeKind } from '[[ .Name ]]-qua';
+import { appConfig } from '../../config';
+import { useUiStore } from '../../store';
+
+let nextId = 1;
+
+export const notificationService = {
+  getState: () => useUiStore.getState(),
+  subscribe: (listener: () => void) => useUiStore.subscribe(listener),
+
+  notify(message: string, kind: NoticeKind = 'info'): void {
+    const id = nextId++;
+    useUiStore.getState().push({ id, message, kind });
+    setTimeout(() => useUiStore.getState().dismiss(id), appConfig.toastDurationMs);
+  },
+
+  dismiss(id: number): void {
+    useUiStore.getState().dismiss(id);
+  },
+};

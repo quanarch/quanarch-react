@@ -1,0 +1,49 @@
+import { getUser, hasPermission, increment, navigate, notify } from '[[ .Name ]]-qua';
+import { getItems, restock } from '../../api';
+import { PERMISSIONS, ROUTES } from '../../constants';
+import type { StockItem, Viewer } from '../../types';
+import { errorMessage, formatMoney, formatNumber } from '../../utils';
+
+/** Everything the inventory quan does: api, utils and the qua meet here. */
+export const inventoryService = {
+  viewer(): Viewer {
+    return {
+      name: getUser()?.name ?? 'someone',
+      canAct: hasPermission(PERMISSIONS.ACTION),
+    };
+  },
+
+  async load(): Promise<StockItem[]> {
+    return getItems();
+  },
+
+  summary(items: StockItem[]): string {
+    return formatNumber(items.filter((i) => i.stock < i.reorderAt).length);
+  },
+
+  formatCell(value: unknown, money: boolean): string {
+    if (typeof value !== 'number') return String(value);
+    return money ? formatMoney(value) : formatNumber(value);
+  },
+
+  /** The quan does not count: it asks the quanar. */
+  count(current: number): number {
+    return increment(current);
+  },
+
+  /** Asks the server to act; the server checks the permission again. */
+  async act(): Promise<void> {
+    try {
+      const result = await restock();
+      notify(result.message, 'success');
+    } catch (error) {
+      notify(errorMessage(error), 'error');
+    }
+  },
+
+  openLinked(): void {
+    navigate(ROUTES.LINKED);
+  },
+
+  errorMessage,
+};

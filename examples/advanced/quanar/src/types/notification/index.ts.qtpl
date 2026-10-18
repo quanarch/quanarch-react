@@ -1,0 +1,7 @@
+import type { NoticeKind } from '[[ .Name ]]-qua';
+
+export interface Toast {
+  id: number;
+  message: string;
+  kind: NoticeKind;
+}

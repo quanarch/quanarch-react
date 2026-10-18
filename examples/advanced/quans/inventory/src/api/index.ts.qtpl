@@ -1,0 +1,12 @@
+import { http } from '[[ .Name ]]-qua';
+import { API_ENDPOINTS } from '../constants';
+import type { ActionResult, StockItem } from '../types';
+
+/** Requests to the server, made with the quanar's client through the qua. */
+export async function getItems(): Promise<StockItem[]> {
+  return http.get<StockItem[]>(API_ENDPOINTS.ITEMS);
+}
+
+export async function restock(): Promise<ActionResult> {
+  return http.post<ActionResult>(API_ENDPOINTS.RESTOCK);
+}

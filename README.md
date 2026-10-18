@@ -51,6 +51,27 @@ on port 5174. A quanar, quan or qmock can be created without a qua; its README
 then says one is needed. The quanar's `src/main.tsx` and `src/core/qua-core`
 carry `// qu:` lines where `qu` plugs in a qua that a new quan brings.
 
+## Examples
+
+`examples/advanced` is a complete application, created from `qu` under
+*examples → React · TypeScript → Advanced*:
+
+```
+shop/
+├── Makefile, package.json   make run / npm start: install, build every quan, start everything
+├── server/                  Node.js API on a JSON database: users, permissions, quans
+├── artifacts/               the artifact store, an S3 stand-in with its own static server
+├── packages/shop-qua/       the qua: counter, user, permissions, navigation, notifications
+├── quanar/                  sign-in, dashboard, quan loader with SHA-256 checks
+└── quans/                   billing (API), inventory (SSE), reports (public), analytics (artifacts)
+```
+
+Two users show what the server lets through: `ada / ada123` sees every quan,
+`alan / alan123` only inventory and reports. Each quan's page explains how it
+was loaded. The quanar and the quans follow one layering: `constants`,
+`config`, `core`, `api`, `store`, `services`, `hooks` (calling services only,
+with their context and provider in the same file) and `pages` (using hooks only).
+
 CI creates a project from these templates with the engine's generator and
 builds every part.
 

@@ -1,0 +1,12 @@
+import { http } from '[[ .Name ]]-qua';
+import { API_ENDPOINTS } from '../constants';
+import type { ActionResult, Metric } from '../types';
+
+/** Requests to the server, made with the quanar's client through the qua. */
+export async function getMetrics(): Promise<Metric[]> {
+  return http.get<Metric[]>(API_ENDPOINTS.METRICS);
+}
+
+export async function refresh(): Promise<ActionResult> {
+  return http.post<ActionResult>(API_ENDPOINTS.REFRESH);
+}

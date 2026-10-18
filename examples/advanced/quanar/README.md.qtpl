@@ -1,0 +1,23 @@
+# [[ .Name ]]-quanar
+
+The quanar: sign-in, the dashboard and the quan loader. It holds no business logic.
+
+| Folder | Holds |
+| --- | --- |
+| `constants` | values: API endpoints, routes, storage keys, delivery descriptions, demo users |
+| `config` | settings, the code side of `.env`, and the quans the server does not know (`static-quans`) |
+| `core` | mechanisms: `axios-client` (the axios instance and `httpClient`: get, post, put, patch, delete), `auth-manager`, `quan-loader`, `sse-client`, `qua-core`, `navigation` |
+| `api` | requests, made with the core's axios client |
+| `store` | zustand stores: `auth-store`, `quan-store`, `ui-store` |
+| `services` | where api, core, utils and stores meet: auth, quans, the qua, notifications, navigation |
+| `hooks` | call services only; each file holds its context, provider and hook |
+| `pages` | use hooks and components only |
+| `components`, `layouts`, `router`, `utils`, `types`, `langs`, `assets` | the rest |
+
+The quan loader fetches a quan's build, and when its source carries a hash
+(every quan registered in the server does), compares the SHA-256 of the file
+with it before running it. `quaService.plug()` implements every call of the qua
+with the quanar's services, `http` being `httpClient` itself: a quan's `api`
+folder calls `http.get` and `http.post` from the qua and its requests leave
+through the quanar's axios client with the user's token. Quans reach the quanar
+through nothing else.

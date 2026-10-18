@@ -1,0 +1,66 @@
+# [[ title .Name ]]
+
+A complete [Quanarch](https://quanarch.org) application: a server, an artifact
+store, a quanar, a qua and four quans, each loaded a different way.
+
+```sh
+make run        # or: npm start
+```
+
+Then open http://localhost:5173 and sign in:
+
+| User | Password | Sees |
+| --- | --- | --- |
+| `ada` | `ada123` | every quan |
+| `alan` | `alan123` | inventory and reports only |
+
+`make run` installs every part, builds the qua and the quans, hashes the quans
+registered in the server, and starts the server (4000), the artifact store
+(4100) and the quanar (5173). Ctrl+C stops all three.
+
+## Layout
+
+```
+[[ .Name ]]/
+├── server/                  Node.js API with a JSON database: users, permissions, quans and each quan's data
+├── artifacts/               the artifact store (an S3 stand-in) with its own static server
+├── packages/[[ .Name ]]-qua/   the qua: the contract between the quanar and its quans
+├── quanar/                  login, dashboard, quan loader
+└── quans/                   billing, inventory, reports, analytics
+```
+
+## Four ways to load a quan
+
+| Quan | Where its build lives | How the quanar learns about it | Hash checked |
+| --- | --- | --- | --- |
+| billing | `artifacts/` | `GET /api/quans` after sign-in | yes |
+| inventory | `artifacts/` | pushed over Server-Sent Events, `GET /api/quans/stream` | yes |
+| reports | `quanar/public/` | listed in the quanar's `src/config` | no |
+| analytics | `artifacts/` | listed in the quanar's `src/config`, loaded straight from the store | no |
+
+The server only lists the quans a user is allowed to load, so the code of the
+others never reaches the browser. For the two quans the server does not know
+about, the quanar hides them by permission, which only shapes the interface.
+
+Things to try while it runs:
+
+- Set `"active": false` for inventory in `server/data/db.json`: it disappears
+  from the sidebar at once, because the server pushes the change over SSE.
+- Change a character in `artifacts/quans/billing/1.0.0/billing.js` and reload:
+  the quanar refuses it, because its hash no longer matches the quans table.
+
+## How a quan talks to the server
+
+Like any plugin, a quan does not call fetch or axios. Its `src/api` folder calls
+`http.get` and `http.post` from the qua; the quanar implements `http` with its
+own axios client, which adds the server's address and the user's token. The
+server checks the permission of every request: alan cannot restock inventory
+even by calling the endpoint by hand.
+
+## How the quanar is organised
+
+Values live in `constants`, settings (the code side of `.env`) in `config`,
+mechanisms in `core` (the axios client, the auth manager, the quan loader, the
+SSE client, the qua core), requests in `api`. `services` is where api, utils
+and stores meet. `hooks` only call services; each hook file holds its own
+context and provider. `pages` only use hooks. The quans follow the same rules.

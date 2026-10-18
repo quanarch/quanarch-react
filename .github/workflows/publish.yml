@@ -2,7 +2,7 @@ name: publish
 
 on:
   push:
-    tags: ['v*']
+    tags: ['react-v*']
 
 permissions:
   contents: read
@@ -25,7 +25,7 @@ jobs:
       - name: Check the tag matches the package version
         run: |
           version="$(node -p "require('./package.json').version")"
-          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+          if [ "react-v$version" != "$GITHUB_REF_NAME" ]; then
             echo "tag $GITHUB_REF_NAME does not match package version $version"
             exit 1
           fi

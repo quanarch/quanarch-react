@@ -1,0 +1,194 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "ada",
+      "name": "Ada Lovelace",
+      "salt": "fb5670c7dd0d7c4d",
+      "password_hash": "12975da11c61bd077494810a2d3a639dae033b6979da037b7e5d6980eab2d1fc",
+      "created_at": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "username": "alan",
+      "name": "Alan Turing",
+      "salt": "8b9f13ec17de7664",
+      "password_hash": "6d92c9daa4b10bf91471e709b8d1644e2f9c821f561cdaf030aa22f867f3ed15",
+      "created_at": "2026-01-01T00:00:00.000Z"
+    }
+  ],
+  "permissions": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "name": "billing:read"
+    },
+    {
+      "id": 2,
+      "user_id": 1,
+      "name": "billing:export"
+    },
+    {
+      "id": 3,
+      "user_id": 1,
+      "name": "inventory:read"
+    },
+    {
+      "id": 4,
+      "user_id": 1,
+      "name": "inventory:write"
+    },
+    {
+      "id": 5,
+      "user_id": 1,
+      "name": "reports:read"
+    },
+    {
+      "id": 6,
+      "user_id": 1,
+      "name": "analytics:read"
+    },
+    {
+      "id": 7,
+      "user_id": 2,
+      "name": "inventory:read"
+    },
+    {
+      "id": 8,
+      "user_id": 2,
+      "name": "reports:read"
+    }
+  ],
+  "quans": [
+    {
+      "id": 1,
+      "name": "billing",
+      "display_name": "Billing",
+      "description": "Invoices and payments.",
+      "delivery": "api",
+      "source_url": "",
+      "version": "",
+      "hash": "",
+      "active": true,
+      "permissions": [
+        "billing:read"
+      ],
+      "created_at": "2026-01-01T00:00:00.000Z",
+      "updated_at": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "name": "inventory",
+      "display_name": "Inventory",
+      "description": "Stock levels across warehouses.",
+      "delivery": "sse",
+      "source_url": "",
+      "version": "",
+      "hash": "",
+      "active": true,
+      "permissions": [
+        "inventory:read"
+      ],
+      "created_at": "2026-01-01T00:00:00.000Z",
+      "updated_at": "2026-01-01T00:00:00.000Z"
+    }
+  ],
+  "invoices": [
+    {
+      "id": "INV-1001",
+      "customer": "Northwind",
+      "amount": 1240.5,
+      "status": "paid"
+    },
+    {
+      "id": "INV-1002",
+      "customer": "Contoso",
+      "amount": 860,
+      "status": "open"
+    },
+    {
+      "id": "INV-1003",
+      "customer": "Fabrikam",
+      "amount": 2310.75,
+      "status": "overdue"
+    },
+    {
+      "id": "INV-1004",
+      "customer": "Tailspin",
+      "amount": 430,
+      "status": "paid"
+    }
+  ],
+  "stock_items": [
+    {
+      "sku": "SKU-01",
+      "name": "Steel bolts",
+      "warehouse": "Istanbul",
+      "stock": 1200,
+      "reorderAt": 500
+    },
+    {
+      "sku": "SKU-02",
+      "name": "Copper wire",
+      "warehouse": "Ankara",
+      "stock": 80,
+      "reorderAt": 150
+    },
+    {
+      "sku": "SKU-03",
+      "name": "Ball bearings",
+      "warehouse": "Izmir",
+      "stock": 340,
+      "reorderAt": 300
+    },
+    {
+      "sku": "SKU-04",
+      "name": "Hex nuts",
+      "warehouse": "Istanbul",
+      "stock": 45,
+      "reorderAt": 200
+    }
+  ],
+  "reports": [
+    {
+      "id": "R-01",
+      "title": "Revenue",
+      "period": "2026-09",
+      "owner": "Finance"
+    },
+    {
+      "id": "R-02",
+      "title": "Churn",
+      "period": "2026-09",
+      "owner": "Growth"
+    },
+    {
+      "id": "R-03",
+      "title": "Stock turnover",
+      "period": "2026-09",
+      "owner": "Operations"
+    }
+  ],
+  "metrics": [
+    {
+      "label": "Visitors",
+      "value": 18240,
+      "change": 12
+    },
+    {
+      "label": "Sign-ups",
+      "value": 642,
+      "change": 4
+    },
+    {
+      "label": "Orders",
+      "value": 211,
+      "change": -3
+    },
+    {
+      "label": "Revenue (k)",
+      "value": 96,
+      "change": 8
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+import type { QuanManifest } from '[[ .Name ]]-qua';
+import { BillingPage } from './pages';
+import { PERMISSIONS, QUAN_NAME, ROUTES } from './constants';
+
+const manifest: QuanManifest = {
+  name: QUAN_NAME,
+  version: '1.0.0',
+  displayName: 'Billing',
+  description: 'Invoices and payments.',
+  routes: [{ path: ROUTES.HOME, component: BillingPage, permission: PERMISSIONS.READ }],
+  permissions: Object.values(PERMISSIONS),
+};
+
+export { manifest };
+export default manifest;

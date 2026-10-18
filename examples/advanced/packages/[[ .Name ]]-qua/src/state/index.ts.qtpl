@@ -1,0 +1,25 @@
+import type { QuanarCore } from '../types';
+
+let core: QuanarCore | null = null;
+
+/** Plugs the quanar's core in. Only the quanar calls this. */
+export function init(quanarCore: QuanarCore): void {
+  core = quanarCore;
+}
+
+/** Unplugs the core. */
+export function reset(): void {
+  core = null;
+}
+
+export function isInitialized(): boolean {
+  return core !== null;
+}
+
+/** The plugged-in core. Throws if the quanar has not called init(). */
+export function getQuanarCore(): QuanarCore {
+  if (!core) {
+    throw new Error('[[ .Name ]]-qua is not initialized: the quanar must call init() first.');
+  }
+  return core;
+}

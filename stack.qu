@@ -16,3 +16,5 @@ template quan templates/quan {
 template qmock templates/quanar {
 	run npm install
 }
+
+example advanced examples/advanced

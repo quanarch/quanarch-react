@@ -1,0 +1,7 @@
+import { init, isInitialized, reset, type QuanarCore } from '[[ .Name ]]-qua';
+
+/** Plugs a core into the qua; called once, before any quan is loaded. */
+export function plugQuaCore(core: QuanarCore): void {
+  if (isInitialized()) reset();
+  init(core);
+}

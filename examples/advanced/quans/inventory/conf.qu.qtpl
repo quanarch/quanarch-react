@@ -1,0 +1,4 @@
+quan inventory
+stack [[ .Stack ]]@[[ .StackVersion ]]
+
+qua [[ .Name ]]-qua@1
