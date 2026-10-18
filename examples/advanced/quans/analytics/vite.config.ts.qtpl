@@ -1,0 +1,32 @@
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+// One script, without React or the qua: the quanar shares them on window.
+// The project's build script decides where it goes with QUAN_OUT_DIR.
+export default defineConfig({
+  plugins: [react()],
+  define: { 'process.env.NODE_ENV': '"production"' },
+  build: {
+    lib: {
+      entry: 'src/index.ts',
+      name: 'AnalyticsQuan',
+      fileName: () => 'analytics.js',
+      formats: ['iife'],
+    },
+    rollupOptions: {
+      external: ['react', 'react-dom', 'react/jsx-runtime', '[[ .Name ]]-qua'],
+      output: {
+        exports: 'named',
+        globals: {
+          react: 'window.React',
+          'react-dom': 'window.ReactDOM',
+          'react/jsx-runtime': 'window.ReactJSXRuntime',
+          '[[ .Name ]]-qua': 'window.[[ pascal .Name ]]Qua',
+        },
+        footer: 'window.AnalyticsQuan = AnalyticsQuan.default || AnalyticsQuan;',
+      },
+    },
+    outDir: process.env.QUAN_OUT_DIR ?? 'dist',
+    emptyOutDir: true,
+  },
+});

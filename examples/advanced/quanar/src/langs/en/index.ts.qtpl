@@ -1,0 +1,14 @@
+/** The quanar's own texts. */
+export const STRINGS = {
+  appName: '[[ title .Name ]]',
+  signIn: 'Sign in',
+  signOut: 'Sign out',
+  username: 'Username',
+  password: 'Password',
+  demoUsers: 'Demo users',
+  home: 'Home',
+  quans: 'Quans',
+  loading: 'Loading…',
+  notFound: 'Nothing here.',
+  noPermission: 'You do not have the permission this page needs.',
+};

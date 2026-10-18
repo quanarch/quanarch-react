@@ -1,0 +1,4 @@
+quanar [[ .Name ]]-quanar
+stack [[ .Stack ]]@[[ .StackVersion ]]
+
+qua [[ .Name ]]-qua@1

@@ -1,0 +1,14 @@
+# [[ .Name ]]-qua
+
+The contract between the quanar and its quans. It holds no behaviour: the
+quanar implements `QuanarCore` and plugs it in with `init()`; quans call the
+functions below and never see the quanar itself.
+
+| Call | Answered by the quanar with |
+| --- | --- |
+| `http.get/post/put/patch/delete(url, body)` | a request to the server through the quanar's axios client, with the user's token |
+| `increment(value)` | `value + 1` |
+| `getUser()` | the signed-in user and their permissions |
+| `hasPermission(name)` | whether that user has the permission |
+| `navigate(path)` | a move inside the quanar's router |
+| `notify(message, kind)` | a toast in the quanar |

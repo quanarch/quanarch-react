@@ -1,0 +1,12 @@
+import { http } from '[[ .Name ]]-qua';
+import { API_ENDPOINTS } from '../constants';
+import type { ActionResult, Invoice } from '../types';
+
+/** Requests to the server, made with the quanar's client through the qua. */
+export async function getInvoices(): Promise<Invoice[]> {
+  return http.get<Invoice[]>(API_ENDPOINTS.INVOICES);
+}
+
+export async function exportInvoices(): Promise<ActionResult> {
+  return http.post<ActionResult>(API_ENDPOINTS.EXPORT);
+}

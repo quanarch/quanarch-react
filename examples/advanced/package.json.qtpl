@@ -1,0 +1,11 @@
+{
+  "name": "[[ .Name ]]",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "build": "node scripts/build.mjs",
+    "start": "node scripts/start.mjs",
+    "clean": "node scripts/clean.mjs"
+  }
+}

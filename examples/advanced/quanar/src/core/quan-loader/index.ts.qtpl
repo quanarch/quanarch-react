@@ -1,0 +1,61 @@
+import type { QuanManifest } from '[[ .Name ]]-qua';
+import type { QuanSource } from '../../types';
+import { sha256Hex, shortHash, toGlobalName } from '../../utils';
+
+export interface LoadedQuan {
+  manifest: QuanManifest;
+  /** true when the hash matched, null when there was nothing to check against. */
+  verified: boolean | null;
+}
+
+/** The build was changed after it was registered: its hash no longer matches. */
+export class HashMismatchError extends Error {
+  constructor(expected: string, actual: string) {
+    super(
+      `Hash mismatch: the quans table expects ${shortHash(expected)} but the file is ${shortHash(actual)}. It changed after it was registered, so it was not run.`
+    );
+    this.name = 'HashMismatchError';
+  }
+}
+
+/** Runs code as a script and waits for it, so a quan's IIFE assigns its global. */
+function runScript(name: string, code: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(new Blob([code], { type: 'text/javascript' }));
+    const script = document.createElement('script');
+    script.src = url;
+    script.dataset.quan = name;
+    script.onload = () => {
+      URL.revokeObjectURL(url);
+      resolve();
+    };
+    script.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error(`${name} could not be run`));
+    };
+    document.head.appendChild(script);
+  });
+}
+
+/**
+ * Fetches a quan's build, checks it against the hash its source carries, runs
+ * it and returns the manifest it published. A changed file is never run.
+ */
+export async function loadQuan(source: QuanSource): Promise<LoadedQuan> {
+  const response = await fetch(source.url, { cache: 'no-store' });
+  if (!response.ok) throw new Error(`Could not fetch ${source.url}: HTTP ${response.status}`);
+  const code = await response.text();
+
+  let verified: boolean | null = null;
+  if (source.hash) {
+    const actual = await sha256Hex(code);
+    if (actual !== source.hash) throw new HashMismatchError(source.hash, actual);
+    verified = true;
+  }
+
+  await runScript(source.name, code);
+  const manifest = (window as unknown as Record<string, QuanManifest | undefined>)[toGlobalName(source.name)];
+  if (!manifest) throw new Error(`${source.name} did not publish a manifest on window.${toGlobalName(source.name)}`);
+  await manifest.onMount?.();
+  return { manifest, verified };
+}

@@ -1,0 +1,49 @@
+import { getUser, hasPermission, increment, navigate, notify } from '[[ .Name ]]-qua';
+import { getMetrics, refresh } from '../../api';
+import { PERMISSIONS, ROUTES } from '../../constants';
+import type { Metric, Viewer } from '../../types';
+import { errorMessage, formatMoney, formatNumber } from '../../utils';
+
+/** Everything the analytics quan does: api, utils and the qua meet here. */
+export const analyticsService = {
+  viewer(): Viewer {
+    return {
+      name: getUser()?.name ?? 'someone',
+      canAct: hasPermission(PERMISSIONS.READ),
+    };
+  },
+
+  async load(): Promise<Metric[]> {
+    return getMetrics();
+  },
+
+  summary(items: Metric[]): string {
+    return formatNumber(items.filter((i) => i.change > 0).length);
+  },
+
+  formatCell(value: unknown, money: boolean): string {
+    if (typeof value !== 'number') return String(value);
+    return money ? formatMoney(value) : formatNumber(value);
+  },
+
+  /** The quan does not count: it asks the quanar. */
+  count(current: number): number {
+    return increment(current);
+  },
+
+  /** Asks the server to act; the server checks the permission again. */
+  async act(): Promise<void> {
+    try {
+      const result = await refresh();
+      notify(result.message, 'success');
+    } catch (error) {
+      notify(errorMessage(error), 'error');
+    }
+  },
+
+  openLinked(): void {
+    navigate(ROUTES.LINKED);
+  },
+
+  errorMessage,
+};

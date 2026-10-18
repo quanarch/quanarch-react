@@ -1,0 +1,36 @@
+import axios from 'axios';
+import type { HttpClient } from '[[ .Name ]]-qua';
+import { appConfig } from '../../config';
+import { authManager } from '../auth-manager';
+
+/** The one axios instance: adds the token to every request and drops it when the server rejects it. */
+export const axiosClient = axios.create({
+  baseURL: appConfig.apiUrl,
+  timeout: appConfig.requestTimeoutMs,
+});
+
+axiosClient.interceptors.request.use((request) => {
+  const token = authManager.getToken();
+  if (token) request.headers.Authorization = `Bearer ${token}`;
+  return request;
+});
+
+axiosClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401 && authManager.getToken()) authManager.clear();
+    return Promise.reject(error);
+  }
+);
+
+/**
+ * The HTTP methods the quanar uses and hands to quans through the qua. Each
+ * returns the response body; errors carry the server's message.
+ */
+export const httpClient: HttpClient = {
+  get: async <T>(url: string) => (await axiosClient.get<T>(url)).data,
+  post: async <T>(url: string, body?: unknown) => (await axiosClient.post<T>(url, body)).data,
+  put: async <T>(url: string, body?: unknown) => (await axiosClient.put<T>(url, body)).data,
+  patch: async <T>(url: string, body?: unknown) => (await axiosClient.patch<T>(url, body)).data,
+  delete: async <T>(url: string) => (await axiosClient.delete<T>(url)).data,
+};
