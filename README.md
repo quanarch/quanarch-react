@@ -49,7 +49,9 @@ The counter belongs to the quan, but the quan never counts: it calls
 `templates/quanar` also renders a **qmock**: the same host marked as a stand-in,
 on port 5174. A quanar, quan or qmock can be created without a qua; its README
 then says one is needed. The quanar's `src/main.tsx` and `src/core/qua-core`
-carry `// qu:` lines where `qu` plugs in a qua that a new quan brings.
+carry `// qu:` lines where `qu` plugs in a qua that a new quan brings, and a new
+quan is listed just above the closing `];` of `src/config/index.ts`. Which lines go
+where is written in `stack.qu`, under `on quan` and `on qua`; `qu` itself knows no React.
 
 ## Examples
 
