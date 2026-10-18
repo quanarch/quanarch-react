@@ -1,5 +1,5 @@
 stack react-ts
-version 0.3.1
+version 0.4.0
 title "React · TypeScript"
 
 template project templates/project
@@ -9,12 +9,41 @@ template qua templates/qua {
 }
 template quanar templates/quanar {
 	run npm install
+	port 5173
+	start npm run dev
 }
 template quan templates/quan {
 	run npm install
+	port 4001
+	start npm run watch
 }
 template qmock templates/quanar {
 	run npm install
+	port 5174
+	start npm run dev
 }
 
-example advanced examples/advanced
+example advanced examples/advanced {
+	start make run
+}
+
+# A quan added to the project later is listed in every quanar and qmock,
+# just above the closing line of their quan list.
+on quan insert src/config/index.ts "];" "  { name: '[[ .Name ]]', url: 'http://localhost:[[ .Port ]]/[[ .Name ]].js' },"
+
+# A qua a quanar or qmock does not have yet is shared on window and given a core.
+on qua insert src/main.tsx "// qu:qua-imports" "import * as [[ pascal .Name ]] from '[[ .Name ]]';"
+on qua insert src/main.tsx "// qu:qua-window-types" "[[ pascal .Name ]]: typeof [[ pascal .Name ]];"
+on qua insert src/main.tsx "// qu:qua-window" "window.[[ pascal .Name ]] = [[ pascal .Name ]];"
+on qua insert src/core/qua-core/index.ts "// qu:qua-imports" "import * as [[ pascal .Name ]] from '[[ .Name ]]';"
+on qua insert src/core/qua-core/index.ts "// qu:qua-cores" {
+	line "const [[ camel .Name ]]Core: [[ pascal .Name ]].QuanarCore = {"
+	line "  increment: (value) => value + 1,"
+	line "};"
+	line
+}
+on qua insert src/core/qua-core/index.ts "// qu:qua-init" {
+	line "if ([[ pascal .Name ]].isInitialized()) [[ pascal .Name ]].reset();"
+	line "[[ pascal .Name ]].init([[ camel .Name ]]Core);"
+}
+on qua run npm install [[ .Dependency ]]
