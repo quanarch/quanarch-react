@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-[[ range .Quas ]]import type { QuanManifest } from '[[ .Name ]]';
-[[ end ]]import { QUANS } from '../../config';
+import type { QuanManifest } from '[[ if .Quas ]][[ (index .Quas 0).Name ]][[ else ]]../../types[[ end ]]';
+import { QUANS } from '../../config';
 import { loadQuan } from '../../core';
 
 /** Loads every configured quan; one failing does not stop the others. */

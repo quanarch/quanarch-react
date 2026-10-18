@@ -1,5 +1,5 @@
-[[ range .Quas ]]import type { QuanManifest } from '[[ .Name ]]';
-[[ end ]]import type { QuanConfig } from '../../types';
+import type { QuanManifest } from '[[ if .Quas ]][[ (index .Quas 0).Name ]][[ else ]]../../types[[ end ]]';
+import type { QuanConfig } from '../../types';
 
 const SCRIPT_TIMEOUT = 15_000;
 

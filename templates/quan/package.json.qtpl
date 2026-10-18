@@ -10,7 +10,7 @@
   },
   "dependencies": {
 [[- range $i, $q := .Quas ]][[ if $i ]],[[ end ]]
-    "[[ $q.Name ]]": "file:[[ $q.Path ]]"
+    "[[ $q.Name ]]": "[[ $q.Dependency ]]"
 [[- end ]]
   },
   "devDependencies": {

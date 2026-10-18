@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+[[ if .Quas ]]import React, { useState } from 'react';
 [[ range .Quas ]]import { increment } from '[[ .Name ]]';
 [[ end ]]
 export const [[ pascal .Name ]]Page: React.FC = () => {
@@ -13,3 +13,14 @@ export const [[ pascal .Name ]]Page: React.FC = () => {
     </section>
   );
 };
+[[ else ]]import React from 'react';
+
+export const [[ pascal .Name ]]Page: React.FC = () => {
+  return (
+    <section>
+      <h1>[[ title .Name ]]</h1>
+      <p>This quan has no qua yet, so it cannot ask its quanar for anything. See the README.</p>
+    </section>
+  );
+};
+[[ end ]]

@@ -1,4 +1,4 @@
-quanar [[ .Name ]]
+[[ .Kind ]] [[ .Name ]]
 stack [[ .Stack ]]@[[ .StackVersion ]]
 [[ range .Quas ]]
 qua [[ .Name ]]@[[ .Version ]]
