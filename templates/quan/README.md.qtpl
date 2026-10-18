@@ -2,7 +2,11 @@
 
 A quan. It cannot run on its own: a quanar loads it and gives it a place to live.
 Everything it needs from the outside comes through its qua.
-
+[[ if not .Quas ]]
+> **No qua yet.** Add a qua to `package.json`, list it in `vite.config.ts` next
+> to React with the global its quanar shares it on, and type the manifest in
+> `src/index.ts` with the qua's `QuanManifest`.
+[[ end ]]
 - `src/index.ts` is the manifest: name, version, routes and permissions.
 - `src/pages` holds the pages the manifest routes to.
 

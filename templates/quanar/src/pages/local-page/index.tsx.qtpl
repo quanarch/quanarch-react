@@ -6,13 +6,24 @@ export const LocalPage: React.FC = () => {
     <section>
       <h1>Local page</h1>
       <p>
-        This page lives inside the quanar <strong>[[ .Name ]]</strong>. It is part of the quanar's own code and is not
-        loaded from any quan.
+        This page lives inside the [[ .Kind ]] <strong>[[ .Name ]]</strong>. It is part of the [[ .Kind ]]'s own code and is
+        not loaded from any quan.
       </p>
       <p>
-        The links under <em>Quans</em> in the sidebar open quans. Each quan is built and served on its own; the quanar
+        The links under <em>Quans</em> in the sidebar open quans. Each quan is built and served on its own; the [[ .Kind ]]
         loads it at runtime and renders it here, in the content area, while the header and the sidebar stay in place.
       </p>
+[[- if eq .Kind "qmock" ]]
+      <p>
+        This is a <strong>qmock</strong>: a stand-in quanar for developing quans. Its core answers the qua with simple
+        stand-in behaviour instead of the real quanar's.
+      </p>
+[[- end ]]
+[[- if not .Quas ]]
+      <p>
+        <strong>No qua yet.</strong> Without a qua this [[ .Kind ]] cannot plug anything in for its quans. See the README.
+      </p>
+[[- end ]]
     </section>
   );
 };

@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-[[ range .Quas ]]    "[[ .Name ]]": "file:[[ .Path ]]",
+[[ range .Quas ]]    "[[ .Name ]]": "[[ .Dependency ]]",
 [[ end ]]    "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-router-dom": "^7.18.4"

@@ -17,6 +17,7 @@ project, a quanar, a quan or a qua in React and TypeScript.
 qu          # choose project, React · TypeScript, then name the parts
 ```
 
+Each part can also be created on its own, inside a project or anywhere else.
 A project is created with its three parts already wired:
 
 ```
@@ -43,7 +44,12 @@ The counter belongs to the quan, but the quan never counts: it calls
 | `templates/project` | The project root: `conf.qu`, a README and `packages/README.md`. |
 | `templates/qua` | The contract: `QuanarCore`, `QuanManifest`, `init()` and one call, `increment()`. |
 | `templates/quanar` | The host: header and sidebar, a local page, the quan loader and the qua's core. |
-| `templates/quan` | A quan: its manifest and empty folders for api, components, config, constants, hooks, langs, pages, services, store, types and utils. |
+| `templates/quan` | A quan: its manifest, a page, routes and permissions in `constants`, and empty folders for api, components, config, hooks, langs, services, store, types and utils. |
+
+`templates/quanar` also renders a **qmock**: the same host marked as a stand-in,
+on port 5174. A quanar, quan or qmock can be created without a qua; its README
+then says one is needed. The quanar's `src/main.tsx` and `src/core/qua-core`
+carry `// qu:` lines where `qu` plugs in a qua that a new quan brings.
 
 CI creates a project from these templates with the engine's generator and
 builds every part.

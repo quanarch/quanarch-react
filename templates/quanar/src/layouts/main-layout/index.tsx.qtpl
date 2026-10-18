@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-[[ range .Quas ]]import type { QuanManifest } from '[[ .Name ]]';
-[[ end ]]import './index.css';
+import type { QuanManifest } from '[[ if .Quas ]][[ (index .Quas 0).Name ]][[ else ]]../../types[[ end ]]';
+import './index.css';
 
 interface MainLayoutProps {
   manifests: QuanManifest[];
@@ -17,7 +17,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ manifests, loading, erro
     <div className="main-layout">
       <header className="main-layout__header">
         <strong>[[ title .Name ]]</strong>
-        <span className="main-layout__badge">quanar</span>
+        <span className="main-layout__badge">[[ .Kind ]]</span>
       </header>
 
       <aside className="main-layout__sidebar">

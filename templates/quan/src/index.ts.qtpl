@@ -2,7 +2,7 @@
 [[ end ]]import { [[ pascal .Name ]]Page } from './pages';
 import { QUAN_NAME, ROUTES, PERMISSIONS } from './constants';
 
-const manifest: QuanManifest = {
+const manifest[[ if .Quas ]]: QuanManifest[[ end ]] = {
   name: QUAN_NAME,
   version: '0.1.0',
   routes: [{ path: ROUTES.HOME, component: [[ pascal .Name ]]Page }],

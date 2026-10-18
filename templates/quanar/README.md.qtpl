@@ -1,15 +1,25 @@
 # [[ .Name ]]
-
+[[ if eq .Kind "qmock" ]]
+A qmock: a stand-in quanar for developing quans. It loads quans exactly like a
+quanar, but its core answers the qua with stand-in behaviour.
+[[ else ]]
 The quanar: it gives quans a place to live. It holds no business logic.
+[[ end ]]
+[[- if not .Quas ]]
+> **No qua yet.** A [[ .Kind ]] plugs a qua's core in for its quans; without one
+> they cannot reach it. Add a qua to `package.json`, implement its `QuanarCore`
+> in `src/core/qua-core` and replace the local `QuanManifest` in `src/types`.
+[[ end ]]
 
 - `src/main.tsx` shares React and the qua on `window`, plugs the core into the qua, and starts.
 - `src/core/qua-core` implements the qua: this is where `increment` really happens.
 - `src/core/quan-loader` loads a built quan with a script tag and reads its manifest.
 - `src/config` lists the quans to load and where each one is served from.
-- `src/router` mounts the routes every quan declares.
+- `src/router` and `src/layouts` mount every quan's routes inside the header and sidebar.
+- Lines marked `// qu:` are where `qu` plugs in a qua when a new quan brings one.
 
 ```sh
-npm run dev      # http://localhost:5173
+npm run dev      # http://localhost:[[ .Port ]]
 ```
 
 Start the quans first (`npm run watch` in each quan).

@@ -1,5 +1,5 @@
 stack react-ts
-version 0.2.0
+version 0.3.0
 title "React · TypeScript"
 
 template project templates/project
@@ -11,5 +11,8 @@ template quanar templates/quanar {
 	run npm install
 }
 template quan templates/quan {
+	run npm install
+}
+template qmock templates/quanar {
 	run npm install
 }
